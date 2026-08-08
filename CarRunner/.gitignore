@@ -1,0 +1,66 @@
+# ==============================
+# CMake generated build files
+# ==============================
+build/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+Makefile
+compile_commands.json
+
+# ==============================
+# C / C++ compiled files
+# ==============================
+*.o
+*.obj
+*.a
+*.so
+*.dll
+*.exe
+*.out
+
+# ==============================
+# Debug / compiler output
+# ==============================
+*.dSYM/
+*.pdb
+*.ilk
+*.stackdump
+core
+core.*
+
+# ==============================
+# IDE / Editor files
+# ==============================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+
+# ==============================
+# OS generated files
+# ==============================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==============================
+# Temporary files
+# ==============================
+*.tmp
+*.temp
+*.bak
+*~
+
+# ==============================
+# Logs
+# ==============================
+*.log
+
+# ==============================
+# Player-generated save data
+# ==============================
+saves/*
+!.gitkeep

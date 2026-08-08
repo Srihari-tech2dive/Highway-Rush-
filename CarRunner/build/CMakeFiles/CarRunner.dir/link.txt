@@ -1,1 +1,0 @@
-/usr/bin/cc -Wl,--dependency-file=CMakeFiles/CarRunner.dir/link.d CMakeFiles/CarRunner.dir/src/core/main.c.o CMakeFiles/CarRunner.dir/src/core/Engine.c.o CMakeFiles/CarRunner.dir/src/core/Application.c.o CMakeFiles/CarRunner.dir/src/core/Time.c.o -o CarRunner

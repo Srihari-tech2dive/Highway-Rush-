@@ -1,3 +1,0 @@
-/home/sh/Highway_rush/CarRunner/build/CMakeFiles/CarRunner.dir
-/home/sh/Highway_rush/CarRunner/build/CMakeFiles/edit_cache.dir
-/home/sh/Highway_rush/CarRunner/build/CMakeFiles/rebuild_cache.dir
