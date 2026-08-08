@@ -1,0 +1,18 @@
+check:
+
+pkg-config --modversion sdl3
+
+~~~~~~~~~~~~~~~~~
+
+SDL_Window *
+
+
+Why a pointer?
+
+When we call SDL:
+
+SDL creates/manages the actual window object and gives us a pointer to it.
+
+Our window variable contains an address/reference to the SDL window.
+
+We're not creating a second window.
