@@ -15,6 +15,7 @@ add_executable(CarRunner
     src/core/Time.c
     src/core/Window.c
     src/core/Input.c
+    src/core/Renderer.c
 )
 
 target_include_directories(CarRunner
