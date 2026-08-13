@@ -2,6 +2,8 @@
 #include "core/Application.h"
 #include "core/Time.h"
 #include "core/Window.h"
+#include "core/Input.h"
+#include <stdio.h>
 
 #include <SDL3/SDL.h>
 
@@ -22,8 +24,16 @@ bool Engine_Init(void)
 
     Time_Init();
 
+    if (!Input_Init())
+    {
+        Window_Shutdown();
+        SDL_Quit();
+        return false;
+    }
+
     if (!Application_Init())
     {
+        Input_Shutdown();
         Window_Shutdown();
         SDL_Quit();
         return false;
@@ -38,6 +48,12 @@ void Engine_Run(void)
 {
     while (running)
     {
+        if (Input_Update())
+        {
+            running = false;
+            continue;
+        }
+
         Time_Update();
 
         float delta_time = Time_GetDelta();
@@ -50,6 +66,8 @@ void Engine_Run(void)
 void Engine_Shutdown(void)
 {
     Application_Shutdown();
+
+    Input_Shutdown();
 
     Window_Shutdown();
 
