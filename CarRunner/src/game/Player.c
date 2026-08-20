@@ -50,26 +50,33 @@ void Player_Update(Player *player, float delta_time)
 
 
 
-    if (player->x < 0.0f)
+        /* Left boundary */
+    if (player->x < BOUNDARY_X)
     {
-        player->x = 0.0f;
+        player->x = BOUNDARY_X;
     }
 
-    if (player->x + player->width > WINDOW_WIDTH)
+    /* Right boundary */
+    if (player->x + player->width >
+        BOUNDARY_X + BOUNDARY_WIDTH)
     {
-        player->x = WINDOW_WIDTH - player->width;
+        player->x =
+            BOUNDARY_X + BOUNDARY_WIDTH - player->width;
     }
 
-    if (player->y < 0.0f)
+    /* Top boundary */
+    if (player->y < BOUNDARY_Y)
     {
-        player->y = 0.0f;
+        player->y = BOUNDARY_Y;
     }
 
-    if (player->y + player->height > WINDOW_HEIGHT)
+    /* Bottom boundary */
+    if (player->y + player->height >
+        BOUNDARY_Y + BOUNDARY_HEIGHT)
     {
-        player->y = WINDOW_HEIGHT - player->height;
+        player->y =
+            BOUNDARY_Y + BOUNDARY_HEIGHT - player->height;
     }
-
 
 
 }
