@@ -16,6 +16,8 @@ add_executable(CarRunner
     src/core/Window.c
     src/core/Input.c
     src/core/Renderer.c
+
+    src/game/Player.c
 )
 
 target_include_directories(CarRunner
