@@ -1,11 +1,14 @@
 #include "core/Application.h"
 #include "core/Renderer.h"
 #include "game/Player.h"
+#include "game/Road.h"
 
 static Player player;
+static Road road;
 
 bool Application_Init(void)
 {
+     Road_Init(&road);
      Player_Init(&player);
 
     return true;
@@ -13,6 +16,7 @@ bool Application_Init(void)
 
 void Application_Update(float delta_time)
 {
+    Road_Update(&road, delta_time);
 
     Player_Update(&player, delta_time);
 
@@ -24,12 +28,7 @@ void Application_Render(void)
 
     /* Game rendering will go here */
 
-    Renderer_DrawRectOutline(
-        100.0f,
-        50.0f,
-        1080.0f,
-        620.0f
-    );
+    Road_Render(&road);
 
 
     Player_Render(&player);
