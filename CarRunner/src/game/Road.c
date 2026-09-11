@@ -1,6 +1,8 @@
 #include "game/Road.h"
 #include "core/Renderer.h"
 
+#include "core/GameConfig.h"
+
 void Road_Init(Road *road)
 {
     road->x = 100.0f;
@@ -12,7 +14,11 @@ void Road_Init(Road *road)
     road->lane_count = 3;
 
     road->scroll_offset = 0.0f;
-    road->scroll_speed = 300.0f;
+    road->scroll_speed = GAME_BASE_SPEED;
+
+    road->dash_height = 40.0f;
+    road->dash_gap = 40.0f;
+
 }
 
 void Road_Update(Road *road, float delta_time)
@@ -50,13 +56,16 @@ void Road_Render(const Road *road)
         road->height
     );
 
-    /* Calculate lane width */
-    float lane_width = road->width / road->lane_count;
 
-    /* Draw lane divider lines */
-float dash_height = 40.0f;
-float dash_gap = 30.0f;
-float dash_cycle = dash_height + dash_gap;
+/* Calculate lane width */
+float lane_width = road->width / road->lane_count;
+
+/* Dash settings */
+float dash_cycle =
+    road->dash_height + road->dash_gap;
+
+/* Draw lane divider lines */
+Renderer_SetDrawColor(255, 255, 255, 255);
 
 for (int i = 1; i < road->lane_count; i++)
 {
@@ -66,11 +75,34 @@ for (int i = 1; i < road->lane_count; i++)
          y < road->y + road->height;
          y += dash_cycle)
     {
+        /* Calculate visible part of dash */
+        float dash_y = y;
+        float dash_end = y + road->dash_height;
+
+        /* Skip dash if completely outside the road */
+        if (dash_end <= road->y ||
+            dash_y >= road->y + road->height)
+        {
+            continue;
+        }
+
+        /* Clip top */
+        if (dash_y < road->y)
+        {
+            dash_y = road->y;
+        }
+
+        /* Clip bottom */
+        if (dash_end > road->y + road->height)
+        {
+            dash_end = road->y + road->height;
+        }
+
         Renderer_DrawRect(
             line_x - 2.0f,
-            y,
+            dash_y,
             4.0f,
-            dash_height
+            dash_end - dash_y
         );
     }
 }

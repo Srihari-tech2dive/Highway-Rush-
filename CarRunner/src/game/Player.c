@@ -4,82 +4,93 @@
 
 #include <SDL3/SDL.h>
 
-#define BOUNDARY_X 100.0f
-#define BOUNDARY_Y 50.0f
-#define BOUNDARY_WIDTH 1080.0f
-#define BOUNDARY_HEIGHT 620.0f
+#include "core/GameConfig.h"
 
-void Player_Init(Player *player)
+void Player_Init(Player *player, const Road *road)
 {
-    player->x = 500.0f;
-    player->y = 300.0f;
-
     player->width = 100.0f;
     player->height = 50.0f;
 
-    player->speed = 300.0f;
+    player->speed = GAME_BASE_SPEED;
+
+    /* Start in the middle lane */
+    player->x =
+        road->x +
+        (road->width - player->width) / 2.0f;
+
+    /* Start near the bottom of the road */
+    player->y =
+        road->y +
+        road->height -
+        player->height -
+        50.0f;
 }
 
-void Player_Update(Player *player, float delta_time)
+void Player_Update(
+    Player *player,
+    const Road *road,
+    float delta_time
+)
 {
     float movement = player->speed * delta_time;
 
+    /* Move up */
     if (Input_IsKeyDown(SDL_SCANCODE_W) ||
         Input_IsKeyDown(SDL_SCANCODE_UP))
     {
         player->y -= movement;
     }
 
+    /* Move down */
     if (Input_IsKeyDown(SDL_SCANCODE_S) ||
         Input_IsKeyDown(SDL_SCANCODE_DOWN))
     {
         player->y += movement;
     }
 
+    /* Move left */
     if (Input_IsKeyDown(SDL_SCANCODE_A) ||
         Input_IsKeyDown(SDL_SCANCODE_LEFT))
     {
         player->x -= movement;
     }
 
+    /* Move right */
     if (Input_IsKeyDown(SDL_SCANCODE_D) ||
         Input_IsKeyDown(SDL_SCANCODE_RIGHT))
     {
         player->x += movement;
     }
 
-
-
-        /* Left boundary */
-    if (player->x < BOUNDARY_X)
+    /* Left boundary */
+    if (player->x < road->x)
     {
-        player->x = BOUNDARY_X;
+        player->x = road->x;
     }
 
     /* Right boundary */
     if (player->x + player->width >
-        BOUNDARY_X + BOUNDARY_WIDTH)
+        road->x + road->width)
     {
         player->x =
-            BOUNDARY_X + BOUNDARY_WIDTH - player->width;
+            road->x + road->width - player->width;
     }
 
     /* Top boundary */
-    if (player->y < BOUNDARY_Y)
+    if (player->y < road->y)
     {
-        player->y = BOUNDARY_Y;
+        player->y = road->y;
     }
 
     /* Bottom boundary */
     if (player->y + player->height >
-        BOUNDARY_Y + BOUNDARY_HEIGHT)
+        road->y + road->height)
     {
         player->y =
-            BOUNDARY_Y + BOUNDARY_HEIGHT - player->height;
+            road->y + road->height - player->height;
     }
-
-
 }
+
 
 void Player_Render(const Player *player)
 {

@@ -1,6 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "game/Road.h"
+
 typedef struct
 {
     float x;
@@ -13,9 +15,13 @@ typedef struct
 
 } Player;
 
-void Player_Init(Player *player);
+void Player_Init(Player *player, const Road *road);
 
-void Player_Update(Player *player, float delta_time);
+void Player_Update(
+    Player *player,
+    const Road *road,
+    float delta_time
+);
 
 void Player_Render(const Player *player);
 

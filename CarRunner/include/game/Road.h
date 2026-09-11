@@ -14,6 +14,9 @@ typedef struct
     float scroll_offset;
     float scroll_speed;
 
+    float dash_height;
+    float dash_gap;
+
 } Road;
 
 void Road_Init(Road *road);

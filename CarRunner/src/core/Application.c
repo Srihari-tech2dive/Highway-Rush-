@@ -9,7 +9,7 @@ static Road road;
 bool Application_Init(void)
 {
      Road_Init(&road);
-     Player_Init(&player);
+     Player_Init(&player,&road);
 
     return true;
 }
@@ -18,7 +18,7 @@ void Application_Update(float delta_time)
 {
     Road_Update(&road, delta_time);
 
-    Player_Update(&player, delta_time);
+    Player_Update(&player, &road, delta_time);
 
 }
 
