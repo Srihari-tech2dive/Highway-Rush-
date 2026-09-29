@@ -13,6 +13,10 @@ typedef struct
 
     float speed;
 
+    int lane;
+    int target_lane;
+
+
 } Player;
 
 void Player_Init(Player *player, const Road *road);

@@ -6,19 +6,43 @@
 
 #include "core/GameConfig.h"
 
+#define LANE_SWITCH_SPEED 800.0f
+
 void Player_Init(Player *player, const Road *road)
 {
-    player->width = 100.0f;
-    player->height = 50.0f;
+    float lane_width =
+        road->width / road->lane_count;
 
-    player->speed = GAME_BASE_SPEED;
+	float target_x =
+    		road->x +
+  	 	 (player->target_lane * lane_width) +
+    		(lane_width - player->width) / 2.0f;
 
-    /* Start in the middle lane */
+
+    int center_lane =
+        road->lane_count / 2;
+
+	float lane_movement =
+    		LANE_SWITCH_SPEED * delta_time;
+
+    player->width =
+        lane_width * 0.35f;
+
+    player->height =
+        player->width * 0.5f;
+
+   player->lane = road->lane_count / 2;
+   
+   player->target_lane = player->lane;
+
+    player->speed =
+        GAME_BASE_SPEED;
+
     player->x =
         road->x +
-        (road->width - player->width) / 2.0f;
+        (center_lane * lane_width) +
+        (lane_width - player->width) / 2.0f;
 
-    /* Start near the bottom of the road */
     player->y =
         road->y +
         road->height -
@@ -49,18 +73,26 @@ void Player_Update(
     }
 
     /* Move left */
-    if (Input_IsKeyDown(SDL_SCANCODE_A) ||
-        Input_IsKeyDown(SDL_SCANCODE_LEFT))
+    /* Request left lane */
+if (Input_IsKeyDown(SDL_SCANCODE_A) ||
+    Input_IsKeyDown(SDL_SCANCODE_LEFT))
+{
+    if (player->target_lane > 0)
     {
-        player->x -= movement;
+        player->target_lane--;
     }
+}
 
-    /* Move right */
-    if (Input_IsKeyDown(SDL_SCANCODE_D) ||
-        Input_IsKeyDown(SDL_SCANCODE_RIGHT))
+/* Request right lane */
+if (Input_IsKeyDown(SDL_SCANCODE_D) ||
+    Input_IsKeyDown(SDL_SCANCODE_RIGHT))
+{
+    if (player->target_lane < road->lane_count - 1)
     {
-        player->x += movement;
+        player->target_lane++;
     }
+}
+
 
     /* Left boundary */
     if (player->x < road->x)
@@ -89,6 +121,26 @@ void Player_Update(
         player->y =
             road->y + road->height - player->height;
     }
+
+if (player->x < target_x)
+{
+    player->x += lane_movement;
+
+    if (player->x > target_x)
+    {
+        player->x = target_x;
+    }
+}
+else if (player->x > target_x)
+{
+    player->x -= lane_movement;
+
+    if (player->x < target_x)
+    {
+        player->x = target_x;
+    }
+}
+
 }
 
 
