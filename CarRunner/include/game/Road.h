@@ -17,11 +17,17 @@ typedef struct
     float dash_height;
     float dash_gap;
 
+   float distance;
+
 } Road;
 
 void Road_Init(Road *road);
 
-void Road_Update(Road *road, float delta_time);
+void Road_Update(
+    Road *road,
+    float speed,
+    float delta_time
+);
 
 void Road_Render(const Road *road);
 

@@ -6,7 +6,9 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 find_package(PkgConfig REQUIRED)
+
 pkg_check_modules(SDL3 REQUIRED IMPORTED_TARGET sdl3)
+pkg_check_modules(SDL3_TTF REQUIRED IMPORTED_TARGET sdl3-ttf)
 
 add_executable(CarRunner
     src/core/main.c
@@ -29,4 +31,5 @@ target_include_directories(CarRunner
 target_link_libraries(CarRunner
     PRIVATE
         PkgConfig::SDL3
+        PkgConfig::SDL3_TTF
 )

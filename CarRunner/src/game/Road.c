@@ -19,20 +19,33 @@ void Road_Init(Road *road)
     road->dash_height = 40.0f;
     road->dash_gap = 40.0f;
 
+   road->distance = 0.0f;
+
 }
 
-void Road_Update(Road *road, float delta_time)
+void Road_Update(
+    Road *road,
+    float speed,
+    float delta_time
+)
 {
-    road->scroll_offset += road->scroll_speed * delta_time;
+    road->scroll_speed = speed;
 
-    float dash_cycle = 40.0f + 30.0f;
+    road->scroll_offset +=
+        road->scroll_speed * delta_time;
+
+    road->distance +=
+    (speed * delta_time) / ROAD_PIXELS_PER_METER;
+
+    float dash_cycle =
+        road->dash_height + road->dash_gap;
 
     if (road->scroll_offset >= dash_cycle)
     {
         road->scroll_offset -= dash_cycle;
     }
-
 }
+
 
 void Road_Render(const Road *road)
 {
